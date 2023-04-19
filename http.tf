@@ -6,6 +6,7 @@ resource "kubernetes_ingress_v1" "http" {
     namespace = local.kubernetes_namespace
     labels    = local.labels
     annotations = {
+      "kubernetes.io/ingress.class"                 = "gce"
       "kubernetes.io/ingress.global-static-ip-name" = google_compute_global_address.static-ip.name
     }
   }
