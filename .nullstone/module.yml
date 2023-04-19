@@ -1,0 +1,14 @@
+org_name: nullstone
+name: gcp-gke-dedicated-load-balancer
+friendly_name: Dedicated HTTP Load Balancer
+description: Creates a GCP Load Balancer connected to a GKE App
+category: capability
+subcategory: ingress
+provider_types:
+    - gcp
+platform: cloud-lb
+subplatform: ""
+type: ""
+appCategories:
+    - container
+is_public: true
