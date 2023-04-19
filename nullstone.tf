@@ -20,6 +20,7 @@ resource "random_string" "resource_suffix" {
 locals {
   tags          = data.ns_workspace.this.tags
   stack_name    = data.ns_workspace.this.stack_name
+  block_name    = data.ns_workspace.this.block_name
   block_ref     = data.ns_workspace.this.block_ref
   env_name      = data.ns_workspace.this.env_name
   resource_name = "${data.ns_workspace.this.block_ref}-${random_string.resource_suffix.result}"
