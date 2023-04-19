@@ -19,7 +19,7 @@ resource "kubernetes_manifest" "managed-certificate" {
   })
 }
 
-resource "kubernetes_ingress" "https" {
+resource "kubernetes_ingress_v1" "https" {
   count = var.enable_https ? 1 : 0
 
   metadata {
@@ -33,10 +33,10 @@ resource "kubernetes_ingress" "https" {
   }
 
   spec {
-    defaultBackend = {
-      service = {
+    default_backend {
+      service {
         name = local.service_name
-        port = {
+        port {
           number = local.service_port
         }
       }

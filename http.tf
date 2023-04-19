@@ -1,4 +1,4 @@
-resource "kubernetes_ingress" "http" {
+resource "kubernetes_ingress_v1" "http" {
   count = var.enable_https ? 0 : 1
 
   metadata {
@@ -11,10 +11,10 @@ resource "kubernetes_ingress" "http" {
   }
 
   spec {
-    defaultBackend = {
-      service = {
+    default_backend {
+      service {
         name = local.service_name
-        port = {
+        port {
           number = local.service_port
         }
       }
