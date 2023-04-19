@@ -8,6 +8,11 @@ EOF
   default = {}
 }
 
+locals {
+  service_name = var.app_metadata["service_name"]
+  service_port = var.app_metadata["service_port"]
+}
+
 variable "enable_https" {
   description = "Enable this to serve up HTTPS traffic. Requires subdomain connection."
   type        = bool
