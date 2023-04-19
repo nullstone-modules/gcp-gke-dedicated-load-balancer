@@ -5,18 +5,19 @@ locals {
 resource "kubernetes_manifest" "managed-certificate" {
   count = var.enable_https ? 1 : 0
 
-  manifest = yamlencode({
+  manifest = {
     apiVersion = "networking.gke.io/v1"
     kind       = "ManagedCertificate"
 
     metadata = {
-      name = local.certificate_name
+      name      = local.certificate_name
+      namespace = local.kubernetes_namespace
     }
 
     spec = {
       domains = [trimsuffix(local.subdomain_fqdn, ".")]
     }
-  })
+  }
 }
 
 resource "kubernetes_ingress_v1" "https" {
