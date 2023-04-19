@@ -45,3 +45,23 @@ resource "kubernetes_ingress_v1" "https" {
     }
   }
 }
+
+resource "kubernetes_manifest" "redirect-http-to-https" {
+  manifest = {
+    apiVersion = "networking.gke.io/v1beta1"
+    kind       = "FrontendConfig"
+
+    metadata = {
+      name      = local.resource_name
+      namespace = local.kubernetes_namespace
+    }
+
+    spec = {
+      sslPolicy = "gke-ingress-ssl-policy"
+
+      redirectToHttps = {
+        enabled = true
+      }
+    }
+  }
+}
