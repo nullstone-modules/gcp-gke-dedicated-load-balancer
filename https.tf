@@ -1,6 +1,6 @@
 locals {
   certificate_name    = local.resource_name
-  certificate_domains = [trimsuffix(local.subdomain_fqdn, ".")]
+  certificate_domains = [local.subdomain_name]
 }
 
 module "cert" {
@@ -8,23 +8,9 @@ module "cert" {
 
   enabled    = var.enable_https
   cert_name  = local.resource_name
-  subdomains = local.certificate_domains
+  subdomains = { for s in local.certificate_domains : s => local.subdomain_zone_id }
 }
 
-resource "kubernetes_secret_v1" "cert" {
-  metadata {
-
-  }
-
-  type = "kubernetes.io/tls"
-
-  data = {
-    "tls.crt" = ""
-    "tls.key" = ""
-  }
-}
-
-/*
 resource "kubernetes_manifest" "managed-certificate" {
   count = var.enable_https ? 1 : 0
 
@@ -42,7 +28,6 @@ resource "kubernetes_manifest" "managed-certificate" {
     }
   }
 }
-*/
 
 resource "kubernetes_ingress_v1" "https" {
   count = var.enable_https ? 1 : 0
@@ -54,7 +39,7 @@ resource "kubernetes_ingress_v1" "https" {
     annotations = {
       "kubernetes.io/ingress.class"                 = "gce"
       "kubernetes.io/ingress.global-static-ip-name" = google_compute_global_address.static-ip.name
-#      "networking.gke.io/managed-certificates"      = local.certificate_name
+      "networking.gke.io/managed-certificates"      = local.certificate_name
     }
   }
 
