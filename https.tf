@@ -15,13 +15,16 @@ resource "kubernetes_manifest" "managed-certificate" {
     }
 
     spec = {
-      domains = [trimsuffix(local.subdomain_fqdn, ".")]
+      domains = [local.subdomain_name]
     }
   }
 }
 
 resource "kubernetes_ingress_v1" "https" {
   count = var.enable_https ? 1 : 0
+
+  // TODO: Enable once everything is working properly
+  //wait_for_load_balancer = true
 
   metadata {
     name      = local.resource_name
