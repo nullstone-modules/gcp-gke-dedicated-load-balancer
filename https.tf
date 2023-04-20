@@ -1,14 +1,5 @@
 locals {
-  certificate_name    = local.resource_name
-  certificate_domains = [local.subdomain_name]
-}
-
-module "cert" {
-  source = "nullstone-modules/sslcert/gcp"
-
-  enabled    = var.enable_https
-  cert_name  = local.resource_name
-  subdomains = { for s in local.certificate_domains : s => local.subdomain_zone_id }
+  certificate_name = local.resource_name
 }
 
 resource "kubernetes_manifest" "managed-certificate" {
@@ -24,7 +15,7 @@ resource "kubernetes_manifest" "managed-certificate" {
     }
 
     spec = {
-      domains = local.certificate_domains
+      domains = [local.subdomain_name]
     }
   }
 }
@@ -44,10 +35,6 @@ resource "kubernetes_ingress_v1" "https" {
   }
 
   spec {
-    tls {
-      secret_name = ""
-    }
-
     default_backend {
       service {
         name = local.service_name
