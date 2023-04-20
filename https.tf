@@ -1,7 +1,30 @@
 locals {
-  certificate_name = local.resource_name
+  certificate_name    = local.resource_name
+  certificate_domains = [trimsuffix(local.subdomain_fqdn, ".")]
 }
 
+module "cert" {
+  source = "nullstone-modules/sslcert/gcp"
+
+  enabled    = var.enable_https
+  cert_name  = local.resource_name
+  subdomains = local.certificate_domains
+}
+
+resource "kubernetes_secret_v1" "cert" {
+  metadata {
+
+  }
+
+  type = "kubernetes.io/tls"
+
+  data = {
+    "tls.crt" = ""
+    "tls.key" = ""
+  }
+}
+
+/*
 resource "kubernetes_manifest" "managed-certificate" {
   count = var.enable_https ? 1 : 0
 
@@ -15,10 +38,11 @@ resource "kubernetes_manifest" "managed-certificate" {
     }
 
     spec = {
-      domains = [trimsuffix(local.subdomain_fqdn, ".")]
+      domains = local.certificate_domains
     }
   }
 }
+*/
 
 resource "kubernetes_ingress_v1" "https" {
   count = var.enable_https ? 1 : 0
@@ -30,11 +54,15 @@ resource "kubernetes_ingress_v1" "https" {
     annotations = {
       "kubernetes.io/ingress.class"                 = "gce"
       "kubernetes.io/ingress.global-static-ip-name" = google_compute_global_address.static-ip.name
-      "networking.gke.io/managed-certificates"      = local.certificate_name
+#      "networking.gke.io/managed-certificates"      = local.certificate_name
     }
   }
 
   spec {
+    tls {
+      secret_name = ""
+    }
+
     default_backend {
       service {
         name = local.service_name
