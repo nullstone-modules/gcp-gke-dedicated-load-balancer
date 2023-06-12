@@ -2,22 +2,12 @@ locals {
   certificate_name = local.resource_name
 }
 
-resource "kubernetes_manifest" "managed-certificate" {
-  count = var.enable_https ? 1 : 0
+module "sslcert" {
+  source = "nullstone-modules/sslcert/gcp"
 
-  manifest = {
-    apiVersion = "networking.gke.io/v1"
-    kind       = "ManagedCertificate"
-
-    metadata = {
-      name      = local.certificate_name
-      namespace = local.kubernetes_namespace
-    }
-
-    spec = {
-      domains = [local.subdomain_name]
-    }
-  }
+  enabled    = var.enable_https
+  cert_name  = local.certificate_name
+  subdomains = [local.subdomain_name]
 }
 
 resource "kubernetes_ingress_v1" "https" {
@@ -31,9 +21,10 @@ resource "kubernetes_ingress_v1" "https" {
     namespace = local.kubernetes_namespace
     labels    = local.labels
     annotations = {
+      // See https://cloud.google.com/kubernetes-engine/docs/how-to/load-balance-ingress#summary_of_external_ingress_annotations
       "kubernetes.io/ingress.class"                 = "gce"
       "kubernetes.io/ingress.global-static-ip-name" = google_compute_global_address.static-ip.name
-      "networking.gke.io/managed-certificates"      = local.certificate_name
+      "ingress.gcp.kubernetes.io/pre-shared-cert"   = module.sslcert.certificate_name
     }
   }
 
