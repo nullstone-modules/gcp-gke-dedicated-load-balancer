@@ -1,5 +1,8 @@
 locals {
   certificate_name = local.resource_name
+  subdomains       = tomap({
+    (local.subdomain_name) = local.subdomain_zone_id
+  })
 }
 
 module "sslcert" {
@@ -7,7 +10,7 @@ module "sslcert" {
 
   enabled    = var.enable_https
   cert_name  = local.certificate_name
-  subdomains = [local.subdomain_name]
+  subdomains = local.subdomains
 }
 
 resource "kubernetes_ingress_v1" "https" {

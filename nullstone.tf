@@ -18,7 +18,7 @@ resource "random_string" "resource_suffix" {
 }
 
 locals {
-  tags          = data.ns_workspace.this.tags
+  tags          = { for k, v in data.ns_workspace.this.tags : lower(k) => v }
   stack_name    = data.ns_workspace.this.stack_name
   block_name    = data.ns_workspace.this.block_name
   block_ref     = data.ns_workspace.this.block_ref
