@@ -63,7 +63,7 @@ resource "kubernetes_manifest" "https-to-service" {
           matches = [
             {
               path = {
-                type  = "Prefix"
+                type  = "PathPrefix"
                 value = "/"
               }
             }
