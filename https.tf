@@ -40,7 +40,7 @@ resource "kubernetes_manifest" "https-to-service" {
   depends_on = [kubernetes_manifest.https-gateway]
 
   manifest = {
-    apiVersion = "networking.gke.io/v1beta1"
+    apiVersion = "gateway.networking.k8s.io/v1beta1"
     kind       = "HTTPRoute"
 
     metadata = {
