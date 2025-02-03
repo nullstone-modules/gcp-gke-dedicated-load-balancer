@@ -12,3 +12,18 @@ output "public_urls" {
     }
   ]
 }
+
+output "readiness_probes" {
+  value = [
+    {
+      initial_delay_seconds = 0
+      period_seconds        = 1
+      timeout_seconds       = 1
+      success_threshold     = 1
+      http_get = jsonencode({
+        path = var.health_check_path
+        port = local.container_port
+      })
+    }
+  ]
+}

@@ -9,8 +9,9 @@ EOF
 }
 
 locals {
-  service_name = var.app_metadata["service_name"]
-  service_port = var.app_metadata["service_port"]
+  service_name   = var.app_metadata["service_name"]
+  service_port   = var.app_metadata["service_port"]
+  container_port = var.app_metadata["container_port"]
 }
 
 variable "enable_https" {
