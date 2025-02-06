@@ -1,3 +1,6 @@
+# 0.1.3 (Feb 06, 2025)
+* Drop `HealthCheckPolicy` in favor of relying on readiness probe for serving pod traffic.
+
 # 0.1.2 (Feb 03, 2025)
 * Added readiness probe to fix app deployment properly verifying the health check.
 
