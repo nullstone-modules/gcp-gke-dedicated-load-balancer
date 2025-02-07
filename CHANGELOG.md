@@ -1,3 +1,6 @@
+# 0.1.3 (Feb 07, 2025)
+* Restore `HealthCheckPolicy` to override the request path of the default GPC LB health check.
+
 # 0.1.2 (Feb 06, 2025)
 * Replace `HealthCheckPolicy` with a readiness probe to dictate healthy pod traffic.
 
