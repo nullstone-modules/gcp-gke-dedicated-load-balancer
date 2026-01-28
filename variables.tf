@@ -14,6 +14,12 @@ locals {
   container_port = var.app_metadata["container_port"]
 }
 
+variable "backend_timeout" {
+  description = "The backend service timeout in seconds for requests. This is the maximum time the load balancer will wait for a backend response."
+  type        = number
+  default     = 30
+}
+
 variable "enable_https" {
   description = "Enable this to serve up HTTPS traffic. Requires subdomain connection."
   type        = bool
