@@ -1,3 +1,6 @@
+# 0.1.4 (Mar 20, 2026)
+* Added `var.request_timeout` to configure request timeouts.
+
 # 0.1.3 (Feb 07, 2025)
 * Restore `HealthCheckPolicy` to override the request path of the default GPC LB health check.
 

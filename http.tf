@@ -66,6 +66,10 @@ resource "kubernetes_manifest" "http-to-service" {
             }
           ]
 
+          timeouts = {
+            request = var.request_timeout
+          }
+
           backendRefs = [
             {
               name = local.service_name
