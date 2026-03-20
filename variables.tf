@@ -49,15 +49,3 @@ variable "health_check_timeout" {
   type        = number
   default     = 4
 }
-
-variable "request_timeout" {
-  type    = string
-  default = "30s"
-
-  description = <<EOF
-Request specifies the maximum duration for a gateway to respond to an HTTP request.
-If the application does not respond within this timeout, the load balancer will return HTTP 504 Timeout.
-
-Warning: specifying "0s" will disable request timeouts.
-EOF
-}
