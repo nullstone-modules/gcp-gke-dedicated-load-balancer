@@ -1,3 +1,6 @@
+# 0.1.5 (Mar 20, 2026)
+* Fixed `var.request_timeout` type declaration.
+
 # 0.1.4 (Mar 20, 2026)
 * Added `var.request_timeout` to configure request timeouts.
 

@@ -51,7 +51,7 @@ variable "health_check_timeout" {
 }
 
 variable "request_timeout" {
-  type    = "string"
+  type    = string
   default = "30s"
 
   description = <<EOF
