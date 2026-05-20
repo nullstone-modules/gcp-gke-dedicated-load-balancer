@@ -1,3 +1,6 @@
+# 0.1.7 (May 20, 2026)
+* Added `var.post_app_metadata`.
+
 # 0.1.6 (Mar 20, 2026)
 * Removed `var.request_timeout` because GKE Load Balancers don't support it yet.
 
