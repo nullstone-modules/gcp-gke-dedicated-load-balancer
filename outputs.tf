@@ -13,6 +13,20 @@ output "public_urls" {
   ]
 }
 
+output "deployment_overrides" {
+  description = <<EOF
+Deployment configuration that the attached app module applies to coordinate rollouts with this load balancer (zero-downtime NEG rollouts).
+Emitted as a list (consistent with other capability outputs) holding a single override object.
+When `deprogram_secs = 0`, the list is empty (all-or-nothing opt-out) and the app falls back to Kubernetes defaults.
+EOF
+  value = var.deprogram_secs > 0 ? [
+    {
+      pre_stop_seconds                 = var.deprogram_secs
+      termination_grace_period_seconds = var.deprogram_secs + var.app_drain_secs
+    }
+  ] : []
+}
+
 output "readiness_probes" {
   value = [
     {

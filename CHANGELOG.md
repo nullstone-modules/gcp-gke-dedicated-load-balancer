@@ -1,3 +1,10 @@
+# 0.2.0 (May 27, 2026)
+* Added `var.deprogram_secs` (default `60`) and `var.app_drain_secs` (default `15`).
+* Added the `deployment_overrides` output (`preStop`, `terminationGracePeriodSeconds`) consumed by the attached app module for zero-downtime rollouts.
+* Wired `HealthCheckPolicy` `checkIntervalSec`/`healthyThreshold`/`unhealthyThreshold` to the `health_check_*` variables (were hardcoded `15`/`1`/`5`).
+* Changed `var.health_check_interval` default to `15` (was `5`) and `var.health_check_unhealthy_threshold` default to `5` (was `2`).
+* Added a `HealthCheckPolicy` precondition: `health_check_unhealthy_threshold * health_check_interval >= deprogram_secs`.
+
 # 0.1.7 (May 20, 2026)
 * Added `var.post_app_metadata`.
 
