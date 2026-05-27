@@ -41,7 +41,7 @@ variable "health_check_unhealthy_threshold" {
 variable "health_check_interval" {
   description = "The approximate amount of time, in seconds, between health checks of an individual target."
   type        = number
-  default     = 15
+  default     = 12
 }
 
 variable "health_check_timeout" {

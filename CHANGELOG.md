@@ -1,3 +1,6 @@
+# 0.2.1 (May 27, 2026)
+* Reduced default `var.health_check_interval` to `12` (was `15`).
+
 # 0.2.0 (May 27, 2026)
 * Added `var.deprogram_secs` (default `60`) and `var.app_drain_secs` (default `15`).
 * Added the `deployment_overrides` output (`preStop`, `terminationGracePeriodSeconds`) consumed by the attached app module for zero-downtime rollouts.
