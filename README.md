@@ -8,6 +8,10 @@ This is commonly used to securely expose a GKE app to the internet.
 This module requires connection a subdomain.
 The subdomain address is automatically connected to the created load balancer.
 
+## HTTPS
+
+When `enable_https` is set, the load balancer enforces TLS 1.2+ (GCP SSL policy profile `RESTRICTED`); clients on TLS 1.0/1.1 are rejected.
+
 ## Backend/Routes
 
 This module creates a simple route configuration to forward all traffic from the load balancer to the Kubernetes Service that is created by the application module.

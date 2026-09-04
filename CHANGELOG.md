@@ -1,3 +1,6 @@
+# 0.2.2 (Sep 04, 2026)
+* Enforced TLS 1.2+ on the HTTPS Gateway via a `RESTRICTED` SSL policy attached with `GCPGatewayPolicy`.
+
 # 0.2.1 (May 27, 2026)
 * Reduced default `var.health_check_interval` to `12` (was `15`).
 
