@@ -1,6 +1,10 @@
 resource "kubernetes_manifest" "https-gateway" {
   count = var.enable_https ? 1 : 0
 
+  // The policy must exist before the controller programs the HTTPS proxy so the
+  // TLS floor is enforced from the start.
+  depends_on = [kubernetes_manifest.gateway_policy]
+
   manifest = {
     apiVersion = "gateway.networking.k8s.io/v1beta1"
     kind       = "Gateway"
